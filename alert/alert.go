@@ -3,6 +3,7 @@ package alert
 import (
 	"errors"
 	"fmt"
+	"math"
 	"sort"
 
 	"github.com/amoskyler/fake_stock_alerts/transaction"
@@ -26,8 +27,9 @@ func (slice Alerts) Len() int {
 	return len(slice)
 }
 
+// returns the lesser of two absolute values: this means higher absolute values will appear higher up in the list
 func (slice Alerts) Less(i int, j int) bool {
-	return slice[i].NetTransactions < slice[j].NetTransactions
+	return math.Abs(float64(slice[i].NetTransactions)) < math.Abs(float64(slice[j].NetTransactions))
 }
 
 func (slice Alerts) Swap(i int, j int) {
