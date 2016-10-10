@@ -37,6 +37,20 @@ func (slice Alerts) Swap(i int, j int) {
 
 }
 
+// ToString returns a string representation of our alert collection
+func (alerts Alerts) ToString() string {
+	aLen := len(alerts)
+	str := fmt.Sprintf("\n%d Alerts:\n", aLen)
+	for i, a := range alerts {
+		str += fmt.Sprintf("\n\t\"%d,%s,%s\"", int(math.Abs(float64(a.NetTransactions))), a.TransactionType, a.Ticker)
+		if i != aLen-1 {
+			str += ","
+		}
+	}
+
+	return str
+}
+
 // GenerateAlerts creates a slice of Alerts out of a user's friends list
 func GenerateAlerts(u user.User) Alerts {
 	transactions := []transaction.Transaction{}

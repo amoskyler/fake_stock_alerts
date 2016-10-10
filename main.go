@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"math/rand"
 	"time"
@@ -13,20 +12,15 @@ import (
 func init() {
 	seed := time.Now().UTC().UnixNano()
 	rand.Seed(seed)
-	fmt.Println("Application initialized with seed", seed, "BEHOLD MY RANDOMNESS", rand.Float64())
+	fmt.Println("Application initialized with seed", seed, "BEHOLD MY RANDOMNESS", rand.Float64(), "\n")
 }
 
 func main() {
-	users := user.GenerateRandomUsers(1, 1, 20, 20)
+	users := user.GenerateRandomUsers(5, 1, 20, 20)
 
-	for _, user := range users {
+	for i, user := range users {
 		alerts := alert.GenerateAlerts(user)
-		b, err := json.MarshalIndent(alerts, "", "	")
-		if err != nil {
-			fmt.Println("ERROR!", err)
-		}
-
-		fmt.Println(string(b))
+		fmt.Println("Alerts for user", i, alerts.ToString(), "\n")
 	}
 
 }

@@ -27,7 +27,7 @@ General
 --
 
 1. The method `alert.GenerateAlerts(*User) Alerts` returns a custom list of alerts for the user provided user. It returns a slice of Alert in the type Alerts
-    `Alerts.SPrintf() string` outputs a list in the format `"'<date>,<BUY|SELL>,<ticker>','<date>,<BUY|SELL>,<ticker>'"`
+    `Alerts.ToString() string` outputs a list in the format `"'<date>,<BUY|SELL>,<ticker>','<date>,<BUY|SELL>,<ticker>'"`
 2. Unit tests have been implemented for the transaction counter logic [(here)](./transactioncounter/transactioncounter_test.go)
    as well as the Alert collection sorting logic [(here)](./alert/alert_test.go).
    Additional Tests: [here](./transactioncounter/transactioncounter_factory_test.go)
@@ -79,40 +79,18 @@ A user has a friends list, as well as a series of transactions
 user := user.GenerateRandomUser(1, 20, 20)
 
 alerts := alert.GenerateAlerts(user)
-b, err := json.MarshalIndent(alerts, "", "	")
-if err != nil {
-  fmt.Println("ERROR!", err)
-}
-
-fmt.Println(string(b))
+fmt.Println(alerts.ToString())
 
 /* Outputs ~:
 [
-	{
-		"NetTransactions": 3,
-		"TransactionType": "BUY",
-		"Ticker": "TWLO"
-	},
-	{
-		"NetTransactions": 2,
-		"TransactionType": "BUY",
-		"Ticker": "FB"
-	},
-	{
-		"NetTransactions": -1,
-		"TransactionType": "SELL",
-		"Ticker": "AAPL"
-	},
-	{
-		"NetTransactions": -1,
-		"TransactionType": "SELL",
-		"Ticker": "TSLA"
-	},
-	{
-		"NetTransactions": 1,
-		"TransactionType": "BUY",
-		"Ticker": "GOOG"
-	}
+Alerts for user 0
+5 Alerts
+
+	"2,BUY,TWTR",
+	"1,SELL,TWLO",
+	"1,BUY,AAPL",
+	"1,SELL,FB",
+	"1,SELL,TSLA"
 ]
 */
 ```
